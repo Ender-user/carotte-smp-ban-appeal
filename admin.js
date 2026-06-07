@@ -1,5 +1,5 @@
-const SUPABASE_URL = "TON_URL";
-const SUPABASE_KEY = "TA_KEY";
+const SUPABASE_URL = "https://qqqfuamvirzihkompcdk.supabase.co/rest/v1/L";
+const SUPABASE_KEY = "sb_publishable_3IAI3-CfWc6tXyw5nNdQCQ_Qa3sobC6";
 
 async function loadAppeals() {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/appeals?order=created_at.desc`, {
