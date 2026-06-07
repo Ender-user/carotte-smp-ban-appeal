@@ -1,23 +1,47 @@
-<style>
-body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
 
-button {
-  margin: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+    }
 
-button:first-of-type {
-  background: #22c55e;
-}
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-button:last-of-type {
-  background: #ef4444;
-}
-</style>
+    .accept {
+      background: #22c55e;
+    }
+
+    .deny {
+      background: #ef4444;
+    }
+
+    .login {
+      background: #5865F2;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Panel Admin</h1>
+
+<button class="login" onclick="login()">Se connecter avec Discord</button>
+
+<div id="list"></div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
