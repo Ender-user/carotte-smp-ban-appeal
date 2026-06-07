@@ -1,10 +1,63 @@
-const SUPABASE_URL = "https://qqqfuamvirzihkompcdk.supabase.co/rest/v1/L";
+const SUPABASE_URL = "https://qqqfuamvirzihkompcdk.supabase.co/rest/v1/L"; 
 const SUPABASE_KEY = "sb_publishable_3IAI3-CfWc6tXyw5nNdQCQ_Qa3sobC6";
 
+const CLIENT_ID = "1431610110412722206";
+const REDIRECT_URI = "https://ender-user.github.io/carotte-smp-ban-appeal/admin.html";
+
+// 🔐 Login Discord
+function login() {
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+  window.location.href = url;
+}
+
+// 🔑 Récup token
+function getToken() {
+  const hash = window.location.hash;
+  if (!hash) return null;
+
+  const params = new URLSearchParams(hash.substring(1));
+  return params.get("access_token");
+}
+
+// 👤 Récup user Discord
+async function getUser(token) {
+  const res = await fetch("https://discord.com/api/users/@me", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return await res.json();
+}
+
+// 🛡️ Vérifier admin
+async function checkAdmin() {
+  const token = getToken();
+  if (!token) return;
+
+  const user = await getUser(token);
+
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/admins?discord_id=eq.${user.id}`, {
+    headers: {
+      apikey: SUPABASE_KEY
+    }
+  });
+
+  const data = await res.json();
+
+  if (data.length === 0) {
+    document.body.innerHTML = "<h1>Accès refusé</h1>";
+    return;
+  }
+
+  loadAppeals();
+}
+
+// 📥 Charger les appeals
 async function loadAppeals() {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/appeals?order=created_at.desc`, {
     headers: {
-      "apikey": SUPABASE_KEY
+      apikey: SUPABASE_KEY
     }
   });
 
@@ -23,10 +76,27 @@ async function loadAppeals() {
       ${a.message}<br>
       Status: ${a.status}<br>
 
-      <button onclick="updateStatus(${a.id}, 'accepted')">✔ Accept</button>
-      <button onclick="updateStatus(${a.id}, 'denied')">❌ Refuse</button>
+      <button class="accept" onclick="updateStatus(${a.id}, 'accepted')">✔ Accept</button>
+      <button class="deny" onclick="updateStatus(${a.id}, 'denied')">❌ Refuse</button>
     `;
 
     container.appendChild(div);
   });
 }
+
+// 🔁 Update status
+async function updateStatus(id, status) {
+  await fetch(`${SUPABASE_URL}/rest/v1/appeals?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status })
+  });
+
+  loadAppeals();
+}
+
+// 🚀 Lancement
+checkAdmin();
