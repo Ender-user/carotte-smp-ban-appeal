@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://qqqfuamvirzihkompcdk.supabase.co";
-const SUPABASE_KEY = "TA_PUBLISHABLE_KEY";
+const SUPABASE_KEY = "sb_publishable_3IAI3-CfWc6tXyw5nNdQCQ_Qa3sobC6";
 
 // 🔑 récupérer token
 function getToken() {
