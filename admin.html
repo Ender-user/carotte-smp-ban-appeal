@@ -11,34 +11,15 @@
 <button onclick="login()">Se connecter avec Discord</button>
 
 <script>
-const CLIENT_ID = "TON_CLIENT_ID";
-const REDIRECT_URI = "<!DOCTYPE html>
-<html>
-<head>
-  <title>Connexion Admin</title>
-</head>
-
-<body>
-
-<h1>Connexion Admin</h1>
-
-<button onclick="login()">Se connecter avec Discord</button>
-
-<script>
 const CLIENT_ID = "1431610110412722206";
-const REDIRECT_URI = "https://tonpseudo.github.io/tonrepo/panel.html";
+const REDIRECT_URI = "https://ender-user.github.io/carotte-smp-ban-appeal/panel.html";
 
 function login() {
-  const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-  window.location.href = url;
-}
-</script>
+  const url = "https://discord.com/api/oauth2/authorize?client_id=" 
+    + CLIENT_ID +
+    "&redirect_uri=" + encodeURIComponent(REDIRECT_URI) +
+    "&response_type=token&scope=identify";
 
-</body>
-</html>";
-
-function login() {
-  const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
   window.location.href = url;
 }
 </script>
